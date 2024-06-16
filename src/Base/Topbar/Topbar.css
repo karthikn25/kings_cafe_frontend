@@ -1,0 +1,247 @@
+#topbar{
+    height: 100%;
+    position: sticky;
+    top: 0px;
+    width: 96%;
+    margin-left:20px ;
+}
+#topbar-box{
+    background: #ffff;
+    height: 70px;
+    border-radius: 13px;
+    padding: 10px 0px;
+    
+}
+#topbar-start{
+    display: flex;
+    justify-content: space-around;
+}
+#topbar-logo{
+>img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+}
+#topbar-search{
+    display: flex;
+    >input{
+        width: 100%;
+        background: #FEF4F4;
+        outline: none;
+        border: none;
+        border-radius: 15px;
+    }
+    >input::placeholder{
+        text-transform: uppercase;
+        padding-left: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        color: black;
+    }
+    >i{
+        position: relative;
+        top: 15px;
+        right: 25px;
+        color: #DFB1B1;
+    }
+}
+#topbar-end{
+    display: flex;
+    justify-content: space-around;
+    >#topbar-nav{
+        padding-top:15px ;
+        cursor: pointer;
+        font-weight: 600;
+        >i{
+            display: none;
+        }
+    }
+    >#topbar-logout{
+        padding-top:15px ;
+        >button{
+            background: #F3DDDD;
+            color: #AF6B2D;
+            border: none;
+            width: 100px;
+            border-radius: 20px;
+            font-size: 10px;
+            
+        }
+  
+    }
+   >#topbar-profile{
+    >img{
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+   }
+            
+        }
+    
+
+@media (max-width:500px) and (min-width:390px) {
+    #topbar-box{
+        background: #ffff;
+        height: 70px;
+        border-radius: 13px;
+        padding: 20px 0px;
+        
+    }
+    #topbar-logo{
+        >img{
+            height: 35px;
+            width: 35px;
+            border-radius: 50%;
+        }
+        }
+        #topbar-search{
+            display: flex;
+            >input{
+                width: 120px;
+                height: 40px;
+                background: #FEF4F4;
+                outline: none;
+                border: none;
+                border-radius: 15px;
+            }
+            >input::placeholder{
+                text-transform: uppercase;
+                padding-left: 20px;
+                font-size: 12px;
+                font-weight: 600;
+                color: black;
+            }
+            >i{
+                position: relative;
+                top: 15px;
+                right: 25px;
+                color: #DFB1B1;
+            }
+        }
+        #topbar-end{
+            display: flex;
+            justify-content: space-around;
+            >#topbar-nav{
+                padding-top:15px ;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: 600;
+               >p{
+                display: none;
+               }
+                >i{
+                    display: block;
+                    font-size: 14px;
+                    font-weight: 550;
+                }
+            }
+            >#topbar-logout{
+                padding-top:15px ;
+                >button{
+                    background: #F3DDDD;
+                    color: #AF6B2D;
+                    border: none;
+                    width: 80px;
+                    border-radius: 20px;
+                    font-size: 10px;
+                    
+                }
+          
+            }
+           >#topbar-profile{
+            padding-top: 10px;
+
+            >img{
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+            }
+           }
+                    
+                }
+}
+
+@media (max-width:390px) and (min-width:200px) {
+    #topbar-box{
+        background: #ffff;
+        height: 50px;
+        border-radius: 13px;
+        padding: 10px 0px;
+        
+    }
+    #topbar-logo{
+        >img{
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+        }
+        }
+        #topbar-search{
+            display: flex;
+            >input{
+                width: 90px;
+                height: 30px;
+                background: #FEF4F4;
+                outline: none;
+                border: none;
+                border-radius: 15px;
+            }
+            >input::placeholder{
+                text-transform: uppercase;
+                padding-left: 20px;
+                font-size: 8px;
+                font-weight: 600;
+                color: black;
+            }
+            >i{
+                position: relative;
+                top: 8px;
+                right: 25px;
+                color: #DFB1B1;
+            }
+        }
+        #topbar-end{
+            display: flex;
+            justify-content: space-around;
+            >#topbar-nav{
+                padding-top:8px ;
+                cursor: pointer;
+                font-size: 10px;
+                font-weight: 600;
+                >p{
+                    display: none;
+                   }
+                    >i{
+                        display: block;
+                        font-size: 14px;
+                        font-weight: 550;
+                    }
+            }
+            >#topbar-logout{
+                padding-top:5px ;
+                >button{
+                    background: #F3DDDD;
+                    color: #AF6B2D;
+                    border: none;
+                    width: 50px;
+                    border-radius: 20px;
+                    font-size: 10px;
+                    
+                }
+          
+            }
+           >#topbar-profile{
+            padding-top: 5px;
+
+            >img{
+                height: 25px;
+                width: 25px;
+                border-radius: 50%;
+            }
+           }
+                    
+                }
+}

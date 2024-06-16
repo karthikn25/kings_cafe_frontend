@@ -1,0 +1,313 @@
+#forget{
+    height: 100vh;
+    max-width: 100vw;
+    background: url(../../Images/cafe\ forget\ bg1.jpg);    width: 100%;
+    box-sizing: border-box;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(90%);
+    filter: saturate(-60%);
+    filter: opacity(150%);
+    overflow: scroll;
+    overflow-x: hidden;
+    font-family: "Michroma", sans-serif;
+    color: #ffffff;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+#forget-form-row{
+    margin:150px 0px;
+    text-align: center;
+}
+#forget-field{
+    /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    >input{
+        margin: 50px 0px;
+        max-width: 650px;
+        width: 100%;
+        background: #221F1F;
+        color: white;
+    }
+    >input::placeholder{
+        color: rgb(245, 241, 241);
+        padding: 20px 45px;
+    }
+    >label{
+         
+        height: 50px;
+        margin: 35px 345px 0px;
+        color: #221F1F;
+        background: transparent;
+    }
+}
+#forget-btn{
+    >button{
+        background: #221F1F;
+        color: white;
+        max-width: 150px;
+        height: 30px;
+        width: 100%;
+        border-radius: 20px;
+    }
+    >button:hover{
+      color: #DD8738;
+    }
+}
+@media (max-width:1290px) and (min-width:1180px) {
+    #forget-field{
+        /* text-align: center; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        >input{
+            margin: 50px 0px;
+            max-width: 650px;
+            width: 100%;
+            background: #221F1F;
+            color: white;
+        }
+        >input::placeholder{
+            color: rgb(245, 241, 241);
+            padding: 20px 45px;
+        }
+        >label{
+             
+            height: 50px;
+            margin: 35px 325px 0px;
+            color: #221F1F;
+            background: transparent;
+        }
+    }
+}
+@media (max-width:1180px) and (min-width:1076px) {
+    #forget-field{
+        /* text-align: center; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        >input{
+            margin: 50px 0px;
+            max-width: 650px;
+            width: 100%;
+            background: #221F1F;
+            color: white;
+        }
+        >input::placeholder{
+            color: rgb(245, 241, 241);
+            padding: 20px 45px;
+        }
+        >label{
+             
+            height: 50px;
+            margin: 35px 250px 0px;
+            color: #221F1F;
+            background: transparent;
+        }
+    }
+}
+@media (max-width:1076px) and (min-width:976px) {
+    #forget-field{
+        /* text-align: center; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        >input{
+            margin: 50px 0px;
+            max-width: 650px;
+            width: 100%;
+            background: #221F1F;
+            color: white;
+        }
+        >input::placeholder{
+            color: rgb(245, 241, 241);
+            padding: 20px 45px;
+        }
+        >label{
+             
+            height: 50px;
+            margin: 35px 200px 0px;
+            color: #221F1F;
+            background: transparent;
+        }
+    }
+}
+@media (max-width:1076px) and (min-width:976px) {
+    #forget-field{
+        /* text-align: center; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        >input{
+            margin: 50px 0px;
+            max-width: 650px;
+            width: 100%;
+            background: #221F1F;
+            color: white;
+        }
+        >input::placeholder{
+            color: rgb(245, 241, 241);
+            padding: 20px 45px;
+        }
+        >label{
+             
+            height: 50px;
+            margin: 35px 190px 0px;
+            color: #221F1F;
+            background: transparent;
+        }
+    }
+}
+@media (max-width:976px) and (min-width:876px) {
+    #forget-field{
+        /* text-align: center; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        >input{
+            margin: 50px 0px;
+            max-width: 650px;
+            width: 100%;
+            background: #221F1F;
+            color: white;
+        }
+        >input::placeholder{
+            color: rgb(245, 241, 241);
+            padding: 20px 45px;
+        }
+        >label{
+             
+            height: 50px;
+            margin: 35px 145px 0px;
+            color: #221F1F;
+            background: transparent;
+        }
+    }
+}
+@media (max-width:876px) and (min-width:776px) {
+    #forget-field{
+        /* text-align: center; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        >input{
+            margin: 50px 0px;
+            max-width: 650px;
+            width: 100%;
+            background: #221F1F;
+            color: white;
+        }
+        >input::placeholder{
+            color: rgb(245, 241, 241);
+            padding: 20px 45px;
+        }
+        >label{
+             
+            height: 50px;
+            margin: 35px 110px 0px;
+            color: #221F1F;
+            background: transparent;
+        }
+    }
+}
+@media (max-width:776px) and (min-width:612px) {
+    #forget-field{
+        /* text-align: center; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        >input{
+            margin: 50px 0px;
+            max-width: 650px;
+            width: 100%;
+            background: #221F1F;
+            color: white;
+        }
+        >input::placeholder{
+            color: rgb(245, 241, 241);
+            padding: 20px 45px;
+        }
+        >label{
+            height: 50px;
+            margin: 35px 50px 0px;
+            color: #221F1F;
+            background: transparent;
+        }
+    }
+}
+@media (max-width:612px) {
+    #forget-field{
+        /* text-align: center; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        >input{
+            margin: 50px 0px;
+            max-width: 650px;
+            width: 100%;
+            background: #221F1F;
+            color: white;
+        }
+        >input::placeholder{
+            color: rgb(245, 241, 241);
+            padding: 20px 45px;
+        }
+        >label{
+            height: 50px;
+            margin: 35px 0px 0px;
+            color: #221F1F;
+            background: transparent;
+        }
+    }
+}
+@media (max-width:350px) {
+    #forget-form-row{
+        margin:150px 0px;
+        text-align: center;
+        >h3{
+          font-size: 18px;
+        }
+    }
+    #forget-btn{
+        >button{
+            background: #221F1F;
+            color: white;
+            max-width: 130px;
+            height: 20px;
+            font-size: 10px;
+            width: 100%;
+            border-radius: 20px;
+        }
+        >button:hover{
+          color: #DD8738;
+        }
+    }
+    #forget-field{
+        /* text-align: center; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        >input{
+            margin: 30px 0px;
+            max-width: 650px;
+            width: 100%;
+            background: #221F1F;
+            color: white;
+            font-size: 14px;
+        }
+        >input::placeholder{
+            color: rgb(245, 241, 241);
+            padding: 10px 45px;
+        }
+        >label{
+             
+            height: 50px;
+            margin: 10px 0px 0px;
+            color: #221F1F;
+            background: transparent;
+        }
+    }
+}

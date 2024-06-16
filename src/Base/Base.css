@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Kings&display=swap');
+
+.whole-container{
+    position: relative;
+    color: #0a0a0a;  
+    padding: 10px;
+    height: 100vh;
+    max-width: 100vw;
+    width: 100%;
+    overflow: scroll;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+    font-family: "Kings", cursive;
+}
+.topbar{
+   position: sticky;
+   top: 0px;
+   max-width: 100vw;
+   width: 100%;
+   height: 12%;
+}
+.content{
+    height: 90%;
+    max-width: 100vw;
+    width: 100%;
+   overflow: scroll;
+   -ms-overflow-style: none;  /* Internet Explorer 10+ */
+   scrollbar-width: none; 
+}
