@@ -27,3 +27,11 @@
    -ms-overflow-style: none;  /* Internet Explorer 10+ */
    scrollbar-width: none; 
 }
+#error{
+    text-align: center;
+    color: red;
+}
+#success{
+    text-align: center;
+    color: green;
+}
