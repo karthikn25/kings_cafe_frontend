@@ -11,6 +11,7 @@ export default function Profile() {
    <div id='profile-box'>
    <div id='profile-img'>
     <img src={img} alt='profile'/>
+    <input type='file'/>
     </div>
     <div id='profile-field'>
     <input type='text' placeholder='name'/>

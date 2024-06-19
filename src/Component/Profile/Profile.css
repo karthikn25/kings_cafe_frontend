@@ -50,6 +50,8 @@
     opacity: 30%;
 }
 #profile-img{
+    display: flex;
+    flex-direction: column;
     padding-top: 20px;
     >img{
         height: 150px;
