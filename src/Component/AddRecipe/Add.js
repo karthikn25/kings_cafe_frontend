@@ -13,16 +13,18 @@ export default function Add() {
     <div id='add-box'>
     <div id='add-img'>
     <img src={img} alt=''/>
+    <input type='file'/>
     </div>
     <div id='add-field'>
     <input type='text' placeholder='name'/>
     </div>
     <div id='add-field'>
-    <select><option>Select Category</option>    <optgroup label='Category'><option>Milkshaks</option>
+    <select><option>SELECT CATEGORY</option>    <optgroup label='Category'><option>Milkshaks</option>
     <option>Sandwhitch</option></optgroup>
-    
-
     </select>
+    </div>
+    <div id='add-field'>
+    <textarea type='text' placeholder="Details of Recipe"/>
     </div>
     <div id='add-btn'>
     <button>ADD</button>

@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Home.css";
 import Base from "../../Base/Base";
 import img from "../../Images/a.jpg";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate=useNavigate();
+
+  useEffect(()=>{
+    if(!sessionStorage.getItem("token")){
+      navigate("/",{replace:true})
+    }
+  })
   return (
     <div id="home">
       <Base>

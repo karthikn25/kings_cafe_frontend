@@ -31,7 +31,6 @@ export default function Topbar() {
     });
     const data = await res.json();
     setUserData(data.user);
-    console.log(userData);
   };
 
   return (
