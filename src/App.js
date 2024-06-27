@@ -7,6 +7,7 @@ import Reset from './Users/Reset/Reset';
 import Home from './Component/Home/Home';
 import Add from './Component/AddRecipe/Add';
 import Profile from './Component/Profile/Profile';
+import Empty from './Component/Empty/Empty';
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
       <Route path='/add' element={<Add/>}/>
 
       <Route path='/profile_edit' element={<Profile/>}/>
+
+      <Route path='/empty' element={<Empty/>}/>
 
       </Routes>
     </div>
