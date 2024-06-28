@@ -34,8 +34,8 @@ export default function Home() {
         "x-auth-token":token
       }
     })
-    const data = await res.json()
-    console.log(data)
+    const data = await res.json();
+    console.log(data);
   }
   return (
     <div id="home">
@@ -46,7 +46,7 @@ export default function Home() {
             <div id="item-container">
             {
               category && category.map((d)=>(
-                <div id="item-box">
+                <div id="item-box" onClick={()=>navigate(`/foodlist/${d._id}/${d.name}`)}>
                 <div className="f-img">
                   <img src={d.picture} alt="food" />
                 </div>

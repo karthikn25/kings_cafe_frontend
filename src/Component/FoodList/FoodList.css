@@ -1,0 +1,7 @@
+#f-btn{
+    color: red;
+    display: flex;
+    justify-content: space-around;
+    font-size: 20px;
+    padding-left: 50px;
+}

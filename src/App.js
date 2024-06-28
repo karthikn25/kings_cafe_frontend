@@ -8,6 +8,7 @@ import Home from './Component/Home/Home';
 import Add from './Component/AddRecipe/Add';
 import Profile from './Component/Profile/Profile';
 import Empty from './Component/Empty/Empty';
+import FoodList from './Component/FoodList/FoodList';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
       <Route path='/reset/:id/:token' element={<Reset/>}/>
 
       <Route path='/home/:token' element={<Home/>}/>
+
+      <Route path='/foodlist/:id/:name' element={<FoodList/>}/>
       
       <Route path='/add' element={<Add/>}/>
 
