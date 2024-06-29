@@ -1,15 +1,15 @@
-.image-container {
+#image-container {
     position: relative;
     display: inline-block;
 }
 
-.image-container img {
-    width: 300px;
-    height: 300px;
+.blur img {
+    width: 170px;
+    height: 170px;
     transition: filter 0.3s ease;
 }
 
-.image-container.blur img {
+.blur img {
     filter: blur(5px);
 }
 

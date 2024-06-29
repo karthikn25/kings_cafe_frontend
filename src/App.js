@@ -26,7 +26,7 @@ function App() {
 
       <Route path='/foodlist/:id/:name' element={<FoodList/>}/>
       
-      <Route path='/add' element={<Add/>}/>
+      <Route path='/:id/addFood' element={<Add/>}/>
 
       <Route path='/profile_edit' element={<Profile/>}/>
 

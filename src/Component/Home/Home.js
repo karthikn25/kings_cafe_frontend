@@ -57,6 +57,14 @@ export default function Home() {
               </div>
               ))
             }
+            <div id="item-box">
+                <div className="f-img">
+                  <img src={""} alt="food" />
+                </div>
+                <div id="f-detail">
+                  <h6>ADD</h6>
+                </div>
+              </div>
             </div>
           </div>
          
