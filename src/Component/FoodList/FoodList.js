@@ -75,15 +75,15 @@ export default function FoodList() {
               {food &&
                 food.map((d) => (
                   <div id="item-box" key={d._id}>
-                  <div className='food-image-container'>
-                  <img 
-                      src={d.photo} 
-                      alt={d.foodName} 
-                      className={!d.status ? 'blurred' : ''}
-                  />
-                  <p style={{color:"red"}}>{!d.status ? "Out of stock":""}</p>
-              </div>
-                    <div id="f-detail" className="f_list_detail">
+                  
+              <div className="f-img">
+                      <img src={d.photo} 
+                      alt={d.foodName}  className={!d.status ? 'blurred' : ''}
+                      />
+                      <p style={{color:"red"}}>{!d.status ? "Out of stock":""}</p>
+
+                    </div>
+                    <div className="f_list_detail">
                       <h6>{d.foodName}</h6>
                       <div id="f-btn">
                         {d.status ? (
@@ -106,9 +106,9 @@ export default function FoodList() {
                   </div>
                 ))}
                 <div id="item-box" onClick={()=>navigate(`/${id}/addFood`)}>
-                  <div className='food-image-container'>
+                 <div className="f-img">
                   <img src={img} alt="add"/>
-              </div>
+                  </div>
                     <div id="f-detail" className="f_list_detail">
                     <h6>ADD RECIPE</h6>
                     </div>

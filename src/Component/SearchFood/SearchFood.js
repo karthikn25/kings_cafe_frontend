@@ -73,7 +73,7 @@ export default function SearchFood() {
               {food &&
                 food.map((d) => (
                   <div id="item-box" key={d._id}>
-                  <div className='food-image-container'>
+                  <div className='f-img'>
                   <img 
                       src={d.photo} 
                       alt={d.foodName} 
@@ -81,7 +81,7 @@ export default function SearchFood() {
                   />
                   <p style={{color:"red"}}>{!d.status ? "Out of stock":""}</p>
               </div>
-                    <div id="f-detail" className="f_list_detail">
+                    <div className="f_list_detail">
                       <h6>{d.foodName}</h6>
                       <div id="f-btn">
                         {d.status ? (
