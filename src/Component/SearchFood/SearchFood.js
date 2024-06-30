@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import "./FoodList.css";
-import Base from "../../Base/Base";
-import { useNavigate, useParams } from "react-router-dom";
-import { URL } from "../../Server";
-import { MdOutlineFastfood, MdOutlineNoFood } from "react-icons/md";
-import img from '../../Images/add image.jpg'
+import React, { useEffect, useState } from 'react'
+import './SearchFood.css'
+import { useNavigate, useParams } from 'react-router-dom';
+import Base from '../../Base/Base';
+import { URL } from '../../Server';
+import { MdOutlineFastfood, MdOutlineNoFood } from 'react-icons/md';
 
-export default function FoodList() {
-  const { id } = useParams();
+export default function SearchFood() {
+    const { id ,keyword} = useParams();
   const token = sessionStorage.getItem("token");
   const [food, setFood] = useState([]);
 
@@ -18,7 +17,7 @@ export default function FoodList() {
   }, []);
 
   const handleGetFood = async () => {
-    const res = await fetch(`${URL}/food/getall/${id}`, {
+    const res = await fetch(`${URL}/food/search/${keyword}`, {
       method: "GET",
       headers: {
         "x-auth-token": token,
@@ -64,7 +63,6 @@ export default function FoodList() {
     
     console.log(data);
   };
-
   return (
     <div id="home">
       <Base>
@@ -105,18 +103,11 @@ export default function FoodList() {
                     </div>
                   </div>
                 ))}
-                <div id="item-box" onClick={()=>navigate(`/${id}/addFood`)}>
-                  <div className='food-image-container'>
-                  <img src={img} alt="add"/>
-              </div>
-                    <div id="f-detail" className="f_list_detail">
-                    <h6>ADD RECIPE</h6>
-                    </div>
-                  </div>
+                
             </div>
           </div>
         </div>
       </Base>
     </div>
-  );
+  )
 }

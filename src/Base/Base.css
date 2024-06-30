@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Kings&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 .whole-container{
     position: relative;
     color: #0a0a0a;  
@@ -27,6 +27,8 @@
    overflow: scroll;
    -ms-overflow-style: none;  /* Internet Explorer 10+ */
    scrollbar-width: none; 
+   margin: 10px 50px;
+   font-family: "Anton", sans-serif;
 }
 #error{
     text-align: center;

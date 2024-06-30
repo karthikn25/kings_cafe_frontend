@@ -8,6 +8,8 @@ import { URL } from "../../Server";
 export default function Topbar() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState([]);
+  const [keyword,setKeyword]=useState();
+
 
   const id = sessionStorage.getItem("id");
   const token = sessionStorage.getItem("token");
@@ -33,6 +35,9 @@ export default function Topbar() {
     setUserData(data.user);
   };
 
+  const handleSearch = async()=>{
+   navigate(`/search/${keyword}`)   
+  }
   return (
     <div id="topbar">
       <div id="topbar-box">
@@ -42,8 +47,8 @@ export default function Topbar() {
               <img src={img} alt="logo" />
             </div>
             <div id="topbar-search">
-              <input type="text" placeholder="Search" />
-              <i class="bx bx-search-alt-2"></i>
+              <input type="text" placeholder="Search" value={keyword} onChange={(e)=>setKeyword(e.target.value)}/>
+              <i class="bx bx-search-alt-2" onClick={handleSearch}></i>
             </div>
           </div>
           <div className="col-6" id="topbar-end">
@@ -51,10 +56,7 @@ export default function Topbar() {
               <p> HOME</p>
               <i class="bx bx-home"></i>
             </div>
-            <div id="topbar-nav" onClick={() => navigate("/add")}>
-              <p>ADD+</p>
-              <i class="bx bx-add-to-queue"></i>
-            </div>
+            
             <div id="topbar-logout">
               <button onClick={handleLogout}>LOGOUT</button>
             </div>

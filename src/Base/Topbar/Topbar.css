@@ -41,9 +41,11 @@
     }
     >i{
         position: relative;
-        top: 15px;
+        top: 20px;
         right: 25px;
-        color: #DFB1B1;
+        font-size: 16px;
+        color: #080808;
+        cursor: pointer;
     }
 }
 #topbar-end{

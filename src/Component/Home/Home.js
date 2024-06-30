@@ -3,6 +3,7 @@ import "./Home.css";
 import Base from "../../Base/Base";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../Server";
+import img from '../../Images/add image.jpg'
 
 export default function Home() {
   const navigate=useNavigate();
@@ -36,6 +37,9 @@ export default function Home() {
     })
     const data = await res.json();
     console.log(data);
+    if(data.category){
+      alert('sure to remove this')
+    }
   }
   return (
     <div id="home">
@@ -51,18 +55,18 @@ export default function Home() {
                   <img src={d.picture} alt="food" />
                 </div>
                 <div id="f-detail">
-                  <h6>{d.name}</h6>
-                  <p onClick={()=>handleRemove(d._id)}>REMOVE</p>
-                </div>
+                  <h6 style={{paddingTop:"30px"}}>{d.name}</h6>
+{ /*                 <p onClick={()=>handleRemove(d._id)}>REMOVE</p>
+*/}                </div>
               </div>
               ))
             }
-            <div id="item-box">
+            <div id="item-box" onClick={()=>navigate("/addCategory")}>
                 <div className="f-img">
-                  <img src={""} alt="food" />
+                  <img src={img} alt="food" />
                 </div>
-                <div id="f-detail">
-                  <h6>ADD</h6>
+                <div id="f-detail" className="c_list-detail" >
+                  <h6>ADD Category</h6>
                 </div>
               </div>
             </div>
