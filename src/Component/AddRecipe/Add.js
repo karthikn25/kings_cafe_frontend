@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Add.css";
 import Base from "../../Base/Base";
 import img from "../../Images/a.jpg";
@@ -13,6 +13,12 @@ export default function Add() {
     details: "",
   });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("token")) {
+      navigate("/", { replace: true });
+    }
+  });
 
   const token = sessionStorage.getItem("token");
   const [success, setSuccess] = useState();
@@ -60,9 +66,9 @@ export default function Add() {
     } else {
       setError("");
       setSuccess(data1.message);
-      setTimeout(()=>{
-        navigate(`/home/${token}`)
-      },2000)
+      setTimeout(() => {
+        navigate(`/home/${token}`);
+      }, 2000);
     }
   };
 
@@ -107,9 +113,11 @@ export default function Add() {
               <div id="add-btn">
                 <button onClick={handleCreate}>ADD</button>
               </div>
-              {
-                error ? <div id="error">{error}</div> : <div id="success">{success}</div>
-              }
+              {error ? (
+                <div id="error">{error}</div>
+              ) : (
+                <div id="success">{success}</div>
+              )}
             </div>
           </div>
         </div>

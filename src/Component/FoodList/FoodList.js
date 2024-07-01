@@ -4,7 +4,7 @@ import Base from "../../Base/Base";
 import { useNavigate, useParams } from "react-router-dom";
 import { URL } from "../../Server";
 import { MdOutlineFastfood, MdOutlineNoFood } from "react-icons/md";
-import img from '../../Images/add image.jpg'
+import img from "../../Images/add image.jpg";
 
 export default function FoodList() {
   const { id } = useParams();
@@ -14,6 +14,9 @@ export default function FoodList() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!sessionStorage.getItem("token")) {
+      navigate("/", { replace: true });
+    }
     handleGetFood();
   }, []);
 
@@ -47,21 +50,16 @@ export default function FoodList() {
 
   const handleRemove = async (foodId) => {
     // Add your remove functionality here
-      alert("sure you remove food")
-    const res = await fetch(`${URL}/food/remove/${foodId}`,{
-      method:"DELETE",
-      headers:{
-        "x-auth-token":token
-      }
-    })
+    alert("sure you remove food");
+    const res = await fetch(`${URL}/food/remove/${foodId}`, {
+      method: "DELETE",
+      headers: {
+        "x-auth-token": token,
+      },
+    });
     const data = await res.json();
-    setFood((prevFood) =>
-      prevFood.map((item) =>
-         item
-      )
-    );
-   
-    
+    setFood((prevFood) => prevFood.map((item) => item));
+
     console.log(data);
   };
 
@@ -75,44 +73,47 @@ export default function FoodList() {
               {food &&
                 food.map((d) => (
                   <div id="item-box" key={d._id}>
-                  
-              <div className="f-img">
-                      <img src={d.photo} 
-                      alt={d.foodName}  className={!d.status ? 'blurred' : ''}
+                    <div className="f-img">
+                      <img
+                        src={d.photo}
+                        alt={d.foodName}
+                        className={!d.status ? "blurred" : ""}
                       />
-                      <p style={{color:"red"}}>{!d.status ? "Out of stock":""}</p>
-
+                      <p style={{ color: "red" }}>
+                        {!d.status ? "Out of stock" : ""}
+                      </p>
                     </div>
                     <div className="f_list_detail">
                       <h6>{d.foodName}</h6>
                       <div id="f-btn">
                         {d.status ? (
-                          <MdOutlineFastfood style={{color:"green"}}
+                          <MdOutlineFastfood
+                            style={{ color: "green" }}
                             onClick={() => toggleImageStatus(d._id)}
                           />
                         ) : (
                           <MdOutlineNoFood
-                          style={{color:"red"}}
+                            style={{ color: "red" }}
                             onClick={() => toggleImageStatus(d._id)}
                           />
                         )}
                         <i
                           className="bx bx-trash"
-                          style={{color:"red"}}
+                          style={{ color: "red" }}
                           onClick={() => handleRemove(d._id)}
                         ></i>
                       </div>
                     </div>
                   </div>
                 ))}
-                <div id="item-box" onClick={()=>navigate(`/${id}/addFood`)}>
-                 <div className="f-img">
-                  <img src={img} alt="add"/>
-                  </div>
-                    <div id="f-detail" className="f_list_detail">
-                    <h6>ADD RECIPE</h6>
-                    </div>
-                  </div>
+              <div id="item-box" onClick={() => navigate(`/${id}/addFood`)}>
+                <div className="f-img">
+                  <img src={img} alt="add" />
+                </div>
+                <div id="f-detail" className="f_list_detail">
+                  <h6>ADD RECIPE</h6>
+                </div>
+              </div>
             </div>
           </div>
         </div>

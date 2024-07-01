@@ -6,13 +6,16 @@ import { URL } from '../../Server';
 import { MdOutlineFastfood, MdOutlineNoFood } from 'react-icons/md';
 
 export default function SearchFood() {
-    const { id ,keyword} = useParams();
+    const { keyword } = useParams();
   const token = sessionStorage.getItem("token");
   const [food, setFood] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!sessionStorage.getItem("token")) {
+      navigate("/", { replace: true });
+    }
     handleGetFood();
   }, []);
 
@@ -61,7 +64,6 @@ export default function SearchFood() {
     );
    
     
-    console.log(data);
   };
   return (
     <div id="home">

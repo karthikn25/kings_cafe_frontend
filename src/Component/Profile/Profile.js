@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Profile.css";
 import Base from "../../Base/Base";
 import img from "../../Images/PROFILE.jpg";
@@ -15,6 +15,11 @@ export default function Profile() {
   const[error,setError]=useState();
   const[success,setSuccess]=useState();
 
+  useEffect(()=>{
+    if (!sessionStorage.getItem("token")) {
+      navigate("/", { replace: true });
+    }
+  })
   const id = sessionStorage.getItem("id");
   const token = sessionStorage.getItem("token");
 

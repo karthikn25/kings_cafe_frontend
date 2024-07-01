@@ -7,7 +7,6 @@ import Reset from './Users/Reset/Reset';
 import Home from './Component/Home/Home';
 import Add from './Component/AddRecipe/Add';
 import Profile from './Component/Profile/Profile';
-import Empty from './Component/Empty/Empty';
 import FoodList from './Component/FoodList/FoodList';
 import AddCategory from './Component/AddCategory/AddCategory';
 import SearchFood from './Component/SearchFood/SearchFood';
@@ -33,8 +32,6 @@ function App() {
       <Route path='/profile_edit' element={<Profile/>}/>
 
       <Route path='/addCategory' element={<AddCategory/>}/>
-
-      <Route path='/empty' element={<Empty/>}/>
 
       <Route path='/search/:keyword' element={<SearchFood/>}/>
 
