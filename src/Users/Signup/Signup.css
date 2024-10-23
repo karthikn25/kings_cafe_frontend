@@ -10,10 +10,16 @@
     filter: opacity(150%);
     overflow: scroll;
     overflow-x: hidden;
+    overflow-y: hidden;
     font-family: "Michroma", sans-serif;
     color: #ffffff;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+    
+        /*
+        -ms-overflow-style: none;  
+    scrollbar-width: none;  
+        */
+    
+    
 }
 #signup-msg{
    padding-top: 250px;
