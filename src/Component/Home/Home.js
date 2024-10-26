@@ -7,14 +7,15 @@ import img from "../../Images/add image.jpg";
 
 export default function Home() {
   const navigate = useNavigate();
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const [category, setCategory] = useState([]);
 
   useEffect(() => {
-    if (!sessionStorage.getItem("token")) {
+    if (!localStorage.getItem("token")) {
       navigate("/", { replace: true });
     }
     handleCategory();
+   
   });
 
   const handleCategory = async () => {

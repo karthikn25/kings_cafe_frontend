@@ -8,13 +8,13 @@ import img from "../../Images/add image.jpg";
 
 export default function FoodList() {
   const { id } = useParams();
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const [food, setFood] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!sessionStorage.getItem("token")) {
+    if (!localStorage.getItem("token")) {
       navigate("/", { replace: true });
     }
     handleGetFood();

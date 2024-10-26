@@ -2,45 +2,55 @@ import React, { useState } from "react";
 import "./Signin.css";
 import { URL } from "../../Server";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../Redux/actions/userAction";
 
 export default function Signin() {
+  const [loading,setLoading]=useState(false);
   const [show,setShow]=useState();
-  const [email,setEmail]=useState();
-  const [password,setPassword]=useState();
-  const [error,setError]=useState();
+  const [credential,setCredential]=useState({
+    email:"",
+    password:"",
+
+  })
+  const dispatch = useDispatch();
+
+  const {userInfo,error}=useSelector((state)=>state.user);
+
   const [success,setSuccess]=useState();
 
   const navigate = useNavigate();
 
-  const handleSignin = async(e)=>{
-    e.preventDefault()
-
-    const userDetails = {
-      email,
-      password
-    }
-    const res = await fetch(`${URL}/user/login`,{
-      method:"POST",
-      body:JSON.stringify(userDetails),
-      headers:{
-        'Content-Type':'application/json'
-      }
+  const handleChange = (e)=>{
+    setCredential({
+      ...credential,
+      [e.target.name]:e.target.value
     })
-    const data = await res.json();
-    console.log(data);
-    if(!data.token){
-      setError(data.message)
-      setSuccess('')
-    }else{
-      setError('')
-      setSuccess(data.message)
-      setTimeout(()=>{
-        sessionStorage.setItem("token",data.token)
-        sessionStorage.setItem('id',data.user._id)
-        navigate(`/home/${data.token}`)
-      })
-    }
   }
+
+  const handleSignin = async (e) => {
+    e.preventDefault();
+
+    try {
+        const result = await dispatch(login(credential));
+
+        // Log the entire result for debugging
+        console.log("Login result:", result);
+
+        // Ensure the response structure is correct
+        if (result && result.message === 'Login successfully') {
+            localStorage.setItem("token", result.token);
+            localStorage.setItem("id", result.user._id);
+            navigate(`/home/${result.token}`);
+        } else {
+            // Log the error message from the response
+            console.error("Login failed:", result.message || 'Unknown error');
+        }
+    } catch (error) {
+        console.error("Login error:", error);
+    }
+};
+
 
   const toggle = ()=>setShow(!show);
 
@@ -61,8 +71,9 @@ export default function Signin() {
                 className="form-control"
                 id="floatingInput"
                 placeholder="name@example.com"
-                value={email}
-                onChange={(e)=>setEmail(e.target.value)}
+                name="email"
+                value={credential.email}
+                onChange={handleChange}
               />
               <label for="floatingInput">Email address</label>
             </div>
@@ -72,8 +83,9 @@ export default function Signin() {
                 className="form-control"
                 id="floatingPassword"
                 placeholder="Password"
-                value={password}
-                onChange={(e)=>setPassword(e.target.value)}
+                name="password"
+                value={credential.password}
+                onChange={handleChange}
               />
               <label for="floatingPassword">Password</label>
             </div>

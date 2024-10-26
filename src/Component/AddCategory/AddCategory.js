@@ -15,12 +15,12 @@ export default function AddCategory() {
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
   useEffect(() => {
-    if (!sessionStorage.getItem("token")) {
+    if (!localStorage.getItem("token")) {
       navigate("/", { replace: true });
     }
   });
 
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;

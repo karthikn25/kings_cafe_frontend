@@ -11,29 +11,29 @@ export default function Topbar() {
   const [keyword,setKeyword]=useState();
 
 
-  const id = sessionStorage.getItem("id");
-  const token = sessionStorage.getItem("token");
+  const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
 
 
   const handleLogout = ()=>{
-   sessionStorage.clear()
+   localStorage.clear()
    navigate("/")
   }
 
-  useEffect(() => {
-    getUser();
-  });
+  // useEffect(() => {
+  //   getUser();
+  // });
 
-  const getUser = async () => {
-    const res = await fetch(`${URL}/user/get/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.json();
-    setUserData(data.user);
-  };
+  // const getUser = async () => {
+  //   const res = await fetch(`${URL}/user/get/${id}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const data = await res.json();
+  //   setUserData(data.user);
+  // };
 
   const handleSearch = async()=>{
    navigate(`/search/${keyword}`)   

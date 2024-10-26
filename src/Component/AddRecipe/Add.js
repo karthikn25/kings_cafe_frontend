@@ -15,12 +15,13 @@ export default function Add() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!sessionStorage.getItem("token")) {
+    if (!localStorage.getItem("token")) {
       navigate("/", { replace: true });
     }
+  
   });
 
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const [success, setSuccess] = useState();
   const [error, setError] = useState();
   const { id } = useParams();
