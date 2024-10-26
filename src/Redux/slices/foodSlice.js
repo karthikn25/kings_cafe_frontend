@@ -55,6 +55,17 @@ const foodSlice = createSlice({
             state.loading=false;
             state.error=action.payload;
         },
+        categoryFoodRequest(state){ 
+            state.loading = true;
+        },
+        categoryFoodSuccess(state,action){
+            state.loading = false;
+            state.foods=action.payload;
+        },
+        categoryFoodFail(state,action){
+            state.loading = false;
+            state.error=action.payload;
+        },
         foodDeleteRequest(state){
             state.loading=true;
         },
@@ -65,17 +76,6 @@ const foodSlice = createSlice({
         foodDeleteFail(state,action){
             state.loading = false;
             state.error = action.payload;
-        },
-        foodEditRequest(state){
-            state.loading = true;
-        },
-        foodEditSuccess(state,action){
-            state.loading = false;
-            state.singleFood=action.payload;
-        },
-        foodEditFail(state,action){
-            state.loading=false;
-            state.error=action.payload;
         },
         foodSearchRequest(state){
             state.loading=true;
@@ -110,7 +110,10 @@ export const {
     foodDeleteFail,
     foodSearchRequest,
     foodSearchSuccess,
-    foodSearchFail
+    foodSearchFail,
+    categoryFoodRequest,
+    categoryFoodSuccess,
+    categoryFoodFail
 } = foodSlice.actions;
 
 export default foodSlice.reducer;

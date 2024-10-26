@@ -57,18 +57,6 @@ const categorySlice = createSlice({
         categoryDeleteFail(state,action){
             state.loading = false;
             state.error = action.payload;
-        },
-        categoryProductRequest(state){
-            state.loading = true;
-            state.error = null;
-        },
-        categoryProductSuccess(state,action){
-            state.loading = false;
-            state.categoryInfo = action.payload;
-        },
-        categoryProductFail(state,action){
-            state.loading = false;
-            state.error = action.payload;
         }
         
     }
