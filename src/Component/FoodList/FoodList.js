@@ -1,67 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./FoodList.css";
 import Base from "../../Base/Base";
 import { useNavigate, useParams } from "react-router-dom";
 import { URL } from "../../Server";
 import { MdOutlineFastfood, MdOutlineNoFood } from "react-icons/md";
 import img from "../../Images/add image.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategoryFood, toggleFoodStatus, deleteFood } from "../../Redux/actions/foodAction"; // Import deleteFood action
+import Loading from "../../Base/Loader/Loading";
 
 export default function FoodList() {
-  const { id } = useParams();
+  const { c_id } = useParams();
+  const dispatch = useDispatch();
+  const { foods, error, loading } = useSelector((state) => state.food);
   const token = localStorage.getItem("token");
-  const [food, setFood] = useState([]);
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
+    if (!token) {
       navigate("/", { replace: true });
+    } else {
+      dispatch(getCategoryFood(c_id));
     }
-    handleGetFood();
-  }, []);
+  }, [dispatch, navigate, token]);
 
-  const handleGetFood = async () => {
-    const res = await fetch(`${URL}/food/getall/${id}`, {
-      method: "GET",
-      headers: {
-        "x-auth-token": token,
-      },
-    });
-    const data = await res.json();
-    setFood(data.food);
-    console.log(data.food); // Log the data to verify the status field
+  const handleToggleStatus = (foodId) => {
+    dispatch(toggleFoodStatus(foodId))
+      .then(() => dispatch(getCategoryFood(c_id)));
   };
 
-  const toggleImageStatus = async (foodId) => {
-    const res = await fetch(`${URL}/food/toggle/${foodId}`, {
-      method: "PUT",
-      headers: {
-        "x-auth-token": token,
-      },
-    });
-    const updatedFood = await res.json();
-    console.log(updatedFood);
-    setFood((prevFood) =>
-      prevFood.map((item) =>
-        item._id === updatedFood._id ? updatedFood : item
-      )
-    );
-  };
+  const handleRemove = (foodId) => {
+    if (window.confirm("Are you sure you want to remove this food?")) {
+        dispatch(deleteFood(foodId))
+            .then(() => {
+                // Refresh the food list after deletion
+                dispatch(getCategoryFood(c_id));
+            })
+            .catch((error) => {
+                console.error("Error deleting food:", error);
+                alert("Failed to delete food. Please try again.");
+            });
+    }
+};
 
-  const handleRemove = async (foodId) => {
-    // Add your remove functionality here
-    alert("sure you remove food");
-    const res = await fetch(`${URL}/food/remove/${foodId}`, {
-      method: "DELETE",
-      headers: {
-        "x-auth-token": token,
-      },
-    });
-    const data = await res.json();
-    setFood((prevFood) => prevFood.map((item) => item));
-
-    console.log(data);
-  };
 
   return (
     <div id="home">
@@ -69,52 +50,59 @@ export default function FoodList() {
         <div id="home-container">
           <div className="category">
             <h3>Recipe List</h3>
-            <div id="item-container">
-              {food &&
-                food.map((d) => (
-                  <div id="item-box" key={d._id}>
-                    <div className="f-img">
-                      <img
-                        src={d.photo}
-                        alt={d.foodName}
-                        className={!d.status ? "blurred" : ""}
-                      />
-                      <p style={{ color: "red" }}>
-                        {!d.status ? "Out of stock" : ""}
-                      </p>
-                    </div>
-                    <div className="f_list_detail">
-                      <h6>{d.foodName}</h6>
-                      <div id="f-btn">
-                        {d.status ? (
-                          <MdOutlineFastfood
-                            style={{ color: "green" }}
-                            onClick={() => toggleImageStatus(d._id)}
-                          />
-                        ) : (
-                          <MdOutlineNoFood
+            {loading ? <Loading /> : (
+              <div id="item-container">
+                {foods.food && foods.food.length > 0 ? (
+                  foods.food.map((d) => (
+                    <div id="item-box" key={d._id}>
+                      <div className="f-img">
+                        <img
+                          src={d.photo}
+                          alt={d.foodName}
+                          className={!d.status ? "blurred" : ""}
+                        />
+                        {!d.status && <p style={{ color: "red" }}>Out of stock</p>}
+                      </div>
+                      <div className="f_list_detail">
+                        <h6>{d.foodName}</h6>
+                        <div id="f-btn">
+                          {d.status ? (
+                            <MdOutlineFastfood
+                              style={{ color: "green" }}
+                              onClick={() => handleToggleStatus(d._id)}
+                            />
+                          ) : (
+                            <MdOutlineNoFood
+                              style={{ color: "red" }}
+                              onClick={() => handleToggleStatus(d._id)}
+                            />
+                          )}
+                          <i class='bx bx-edit-alt'
+                          style={{ color: "blue" }}
+
+                          ></i>
+                          <i
+                            className="bx bx-trash"
                             style={{ color: "red" }}
-                            onClick={() => toggleImageStatus(d._id)}
-                          />
-                        )}
-                        <i
-                          className="bx bx-trash"
-                          style={{ color: "red" }}
-                          onClick={() => handleRemove(d._id)}
-                        ></i>
+                            onClick={() => handleRemove(d._id)} // Updated to use the new handleRemove function
+                          ></i>
+                        </div>
                       </div>
                     </div>
+                  ))
+                ) : (
+                  <p>No recipes available.</p>
+                )}
+                <div id="item-box" onClick={() => navigate(`/${c_id}/addFood`)}>
+                  <div className="f-img">
+                    <img src={img} alt="add" />
                   </div>
-                ))}
-              <div id="item-box" onClick={() => navigate(`/${id}/addFood`)}>
-                <div className="f-img">
-                  <img src={img} alt="add" />
-                </div>
-                <div id="f-detail" className="f_list_detail">
-                  <h6>ADD RECIPE</h6>
+                  <div id="f-detail" className="f_list_detail">
+                    <h6>ADD RECIPE</h6>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </Base>

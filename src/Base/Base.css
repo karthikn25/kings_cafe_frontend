@@ -7,7 +7,7 @@
     height: 100vh;
     max-width: 100vw;
     width: 100%;
-    overflow: scroll;
+    overflow: hidden;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
 }
@@ -29,6 +29,7 @@
    scrollbar-width: none; 
    margin: 10px 50px;
    font-family: "Anton", sans-serif;
+   padding-bottom: 20px;
 }
 #error{
     text-align: center;

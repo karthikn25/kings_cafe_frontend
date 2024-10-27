@@ -22,6 +22,20 @@ const foodSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        foodToggleRequest(state) {
+            state.loading = true;
+        },
+        foodToggleSuccess(state, action) {
+            state.loading = false;
+            const index = state.foods.findIndex(food => food._id === action.payload._id);
+            if (index !== -1) {
+                state.foods[index].status = action.payload.status; // Update status
+            }
+        },
+        foodToggleFail(state, action) {
+            state.loading = false;
+            state.error = action.payload;
+        },
         foodGetAllRequest(state){
             state.loading = true;
         },
@@ -113,7 +127,10 @@ export const {
     foodSearchFail,
     categoryFoodRequest,
     categoryFoodSuccess,
-    categoryFoodFail
+    categoryFoodFail,
+    foodToggleRequest,
+    foodToggleSuccess,
+    foodToggleFail
 } = foodSlice.actions;
 
 export default foodSlice.reducer;

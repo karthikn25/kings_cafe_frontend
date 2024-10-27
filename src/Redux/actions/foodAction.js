@@ -1,4 +1,4 @@
-import { categoryFoodFail, categoryFoodRequest, categoryFoodSuccess, foodDeleteFail, foodDeleteRequest, foodDeleteSuccess, foodGetAllFail, foodGetAllRequest, foodGetAllSuccess, foodGetSingleRequest, foodPostFail, foodPostRequest, foodPostSuccess, foodSearchFail, foodSearchRequest, foodSearchSuccess, foodUpdateFail, foodUpdateRequest, foodUpdateSuccess } from "../slices/foodSlice"
+import { categoryFoodFail, categoryFoodRequest, categoryFoodSuccess, foodDeleteFail, foodDeleteRequest, foodDeleteSuccess, foodGetAllFail, foodGetAllRequest, foodGetAllSuccess, foodGetSingleRequest, foodPostFail, foodPostRequest, foodPostSuccess, foodSearchFail, foodSearchRequest, foodSearchSuccess, foodToggleFail, foodToggleRequest, foodToggleSuccess, foodUpdateFail, foodUpdateRequest, foodUpdateSuccess } from "../slices/foodSlice"
 
 
 
@@ -73,11 +73,9 @@ const getAllFood = ()=>async(dispatch)=>{
 const deleteFood = (foodInfo)=>async(dispatch)=>{
     try {
         dispatch(foodDeleteRequest());
-        const res = await fetch(`${process.env.REACT_APP_URL}/remove/${foodInfo}`,{
+        const res = await fetch(`${process.env.REACT_APP_URL}/food/remove/${foodInfo}`,{
             method:"DELETE",
-            headers:{
-                "Content-Type":"application/json"
-            }
+           
         })
         const data = await res.json();
         console.log(data);
@@ -156,6 +154,23 @@ const searchFood = (keyword)=>async(dispatch)=>{
     }
 }
 
+const toggleFoodStatus = (foodId) => async (dispatch) => {
+    dispatch(foodToggleRequest());
+    try {
+        const response = await fetch(`${process.env.REACT_APP_URL}/food/toggle/${foodId}`, {
+            method: 'PUT'
+          
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to toggle food status');
+        }
+        dispatch(foodToggleSuccess(data));
+    } catch (error) {
+        dispatch(foodToggleFail(error.message));
+    }
+};
+
 
 export 
 {
@@ -165,5 +180,7 @@ export
     deleteFood,
     getSingleFood,
     foodUpdate,
-    searchFood
+    searchFood,
+    toggleFoodStatus
+
 }

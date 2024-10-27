@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryGet } from "../../Redux/actions/categoryAction";
 import img from "../../Images/add image.jpg";
+import Loading from "../../Base/Loader/Loading";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -36,23 +37,23 @@ export default function Home() {
   }, [dispatch]);
 
   return (
-    <div id="home">
+    
+     <div id="home">
       <Base>
+
         <div id="home-container">
           <div className="category">
             <h3>Category</h3>
+             {loading ? <Loading/> : 
             <div id="item-container">
-              {loading ? (
-                <p>Loading categories...</p>
-              ) : error ? (
-                <p>Error loading categories: {error}</p>
-              ) : (
-                categoryInfo &&
+              {
+
+                categoryInfo.category &&
                 categoryInfo.category.map((d) => (
                   <div
                     key={d._id} // Add key for mapping
                     id="item-box"
-                    onClick={() => navigate(`/foodlist/${d._id}/${d.name}`)}
+                    onClick={() => navigate(`/foodlist/${d.name}/${d._id}/${token}`)}
                   >
                     <div className="f-img">
                       <img src={d.picture} alt={d.name} />
@@ -60,9 +61,13 @@ export default function Home() {
                     <div id="f-detail">
                       <h6>{d.name}</h6>
                     </div>
+                    <div style={{display:"flex",justifyContent:"space-around"}}>
+                    <p style={{color:"blue"}}><i class='bx bx-edit-alt'></i> Edit</p>
+                    <p style={{color:"red"}}><i class='bx bx-trash' ></i> Remove</p>
+                    </div>
                   </div>
-                ))
-              )}
+             )) }
+               
               <div id="item-box" onClick={() => navigate("/addCategory")}>
                 <div className="f-img">
                   <img src={img} alt="Add Category" />
@@ -71,10 +76,15 @@ export default function Home() {
                   <h6>ADD Category</h6>
                 </div>
               </div>
+            
             </div>
+             }
           </div>
         </div>
       </Base>
     </div>
+  
+    
+  
   );
 }

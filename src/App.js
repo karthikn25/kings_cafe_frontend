@@ -25,7 +25,7 @@ function App() {
 
       <Route path='/home/:token' element={<Home/>}/>
 
-      <Route path='/foodlist/:id/:name' element={<FoodList/>}/>
+      <Route path='/foodlist/:name/:c_id/:token' element={<FoodList/>}/>
       
       <Route path='/:id/addFood' element={<Add/>}/>
 
