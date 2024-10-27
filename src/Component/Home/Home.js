@@ -2,45 +2,39 @@ import React, { useEffect, useState } from "react";
 import "./Home.css";
 import Base from "../../Base/Base";
 import { useNavigate } from "react-router-dom";
-import { URL } from "../../Server";
+import { useDispatch, useSelector } from "react-redux";
+import { categoryGet } from "../../Redux/actions/categoryAction";
 import img from "../../Images/add image.jpg";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const { categoryInfo, error } = useSelector((state) => state.category);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const [category, setCategory] = useState([]);
 
+  // Redirect if not authenticated
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
+    if (!token) {
       navigate("/", { replace: true });
     }
-   
-   
-  });
+  }, [token, navigate]);
 
-  // const handleCategory = async () => {
-  //   const res = await fetch(`${URL}/category/get`, {
-  //     method: "GET",
-  //     headers: {
-  //       "x-auth-token": token,
-  //     },
-  //   });
-  //   const data = await res.json();
-  //   setCategory(data.category);
-  // };
-  const handleRemove = async (id) => {
-    const res = await fetch(`${URL}/category/remove/${id}`, {
-      method: "DELETE",
-      headers: {
-        "x-auth-token": token,
-      },
-    });
-    const data = await res.json();
-    console.log(data);
-    if (data.category) {
-      alert("sure to remove this");
-    }
-  };
+  // Fetch categories
+  useEffect(() => {
+    const fetchCategory = async () => {
+      setLoading(true);
+      try {
+        await dispatch(categoryGet());
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCategory();
+  }, [dispatch]);
+
   return (
     <div id="home">
       <Base>
@@ -48,25 +42,30 @@ export default function Home() {
           <div className="category">
             <h3>Category</h3>
             <div id="item-container">
-              {category &&
-                category.map((d) => (
+              {loading ? (
+                <p>Loading categories...</p>
+              ) : error ? (
+                <p>Error loading categories: {error}</p>
+              ) : (
+                categoryInfo &&
+                categoryInfo.category.map((d) => (
                   <div
+                    key={d._id} // Add key for mapping
                     id="item-box"
                     onClick={() => navigate(`/foodlist/${d._id}/${d.name}`)}
                   >
                     <div className="f-img">
-                      <img src={d.picture} alt="food" />
+                      <img src={d.picture} alt={d.name} />
                     </div>
                     <div id="f-detail">
                       <h6>{d.name}</h6>
-                      {/*                 <p onClick={()=>handleRemove(d._id)}>REMOVE</p>
-                       */}{" "}
                     </div>
                   </div>
-                ))}
+                ))
+              )}
               <div id="item-box" onClick={() => navigate("/addCategory")}>
                 <div className="f-img">
-                  <img src={img} alt="food" />
+                  <img src={img} alt="Add Category" />
                 </div>
                 <div id="f-detail" className="c_list-detail">
                   <h6>ADD Category</h6>
