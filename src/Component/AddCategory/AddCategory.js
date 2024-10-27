@@ -4,15 +4,23 @@ import Base from "../../Base/Base";
 import img from "../../Images/a.jpg";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../Server";
+import { useDispatch, useSelector } from "react-redux";
+import { categoryPost } from "../../Redux/actions/categoryAction";
 
 export default function AddCategory() {
-  const [category, setCategory] = useState({
-    name: "",
-    picture: null,
-  });
+
+  const [credential,setCredential]=useState({
+    name:"",
+    picture:null
+  })
+  
   const navigate = useNavigate();
 
-  const [error, setError] = useState();
+  const dispatch= useDispatch();
+
+  const {categoryInfo,error}=useSelector((state)=>state.category);
+  const [loading,setLoading]=useState(false);
+
   const [success, setSuccess] = useState();
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -25,13 +33,13 @@ export default function AddCategory() {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "picture") {
-      setCategory({
-        ...category,
+      setCredential({
+        ...credential,
         picture: files[0],
       });
     } else {
-      setCategory({
-        ...category,
+      setCredential({
+        ...credential,
         [name]: value,
       });
     }
@@ -40,36 +48,39 @@ export default function AddCategory() {
   const handleAddCategory = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("name", category.name);
-    if (category.picture) {
-      data.append("picture", category.picture);
+    data.append("name", credential.name);
+    if (credential.picture) {
+        data.append("picture", credential.picture);
     }
-    const res = await fetch(`${URL}/category/create`, {
-      method: "POST",
-      body: data,
-      headers: {
-        "x-auth-token": token,
-      },
-    });
-    const data1 = await res.json();
-    console.log(data1);
-    if (!data1.category) {
-      setError(data1.message);
-      setSuccess("");
-    } else {
-      setSuccess(data1.message);
-      setError("");
-      setTimeout(() => {
-        navigate(`/home/${token}`);
-      });
+
+    if (loading) return;
+    setLoading(true);
+
+    try {
+        const response = await dispatch(categoryPost(data));
+        // Ensure that the response is being handled correctly
+        if (response.error) {
+            throw new Error(response.error);
+        }
+       
+    } catch (err) {
+        console.error("Error adding category:", err);
+        setSuccess(""); // Clear success message on error
+    } finally {
+        setLoading(false);
+        setSuccess("Category added successfully!");
+        setTimeout(() => {
+            navigate(`/home/${token}`);
+        }, 1000);
     }
-  };
+};
+
 
   return (
     <div id="add">
       <Base>
         <div id="add-container">
-          <h3>ADD RECIPES</h3>
+          <h3>ADD Category</h3>
           <div id="add-box-container">
             <div id="add-box">
               <div id="add-img">
@@ -82,7 +93,7 @@ export default function AddCategory() {
                   placeholder="name"
                   name="name"
                   onChange={handleChange}
-                  value={category.name}
+                  value={credential.name}
                 />
               </div>
 

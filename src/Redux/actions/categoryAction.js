@@ -6,9 +6,9 @@ const categoryPost = (credential)=>async(dispatch)=>{
         dispatch(categoryPostRequest());
         const res = await fetch(`${process.env.REACT_APP_URL}/category/create`,{
             method:"POST",
-            body:JSON.stringify(credential),
+            body:credential,
             headers:{
-                "Content-Type":"application/json"
+                "x-auth-token":localStorage.getItem("token")
             }
         })
         const data = await res.json()

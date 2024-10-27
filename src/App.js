@@ -10,6 +10,8 @@ import Profile from './Component/Profile/Profile';
 import FoodList from './Component/FoodList/FoodList';
 import AddCategory from './Component/AddCategory/AddCategory';
 import SearchFood from './Component/SearchFood/SearchFood';
+import EditCategory from './Component/EditCategory/EditCategory';
+import EditFood from './Component/EditFood/EditFood';
 
 function App() {
   return (
@@ -25,9 +27,13 @@ function App() {
 
       <Route path='/home/:token' element={<Home/>}/>
 
+      <Route path='/edit/:c_id/:token' element={<EditCategory/>}/>
+ 
       <Route path='/foodlist/:name/:c_id/:token' element={<FoodList/>}/>
       
       <Route path='/:id/addFood' element={<Add/>}/>
+
+      <Route path='/editFood/:f_id/:token' element={<EditFood/>}/>
 
       <Route path='/profile_edit' element={<Profile/>}/>
 

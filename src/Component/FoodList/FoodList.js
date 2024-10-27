@@ -78,6 +78,7 @@ export default function FoodList() {
                             />
                           )}
                           <i class='bx bx-edit-alt'
+                          onClick={()=>navigate(`/editFood/${d._id}/${token}`)}
                           style={{ color: "blue" }}
 
                           ></i>
