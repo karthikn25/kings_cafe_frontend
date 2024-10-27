@@ -16,12 +16,12 @@ export default function Profile() {
   const[success,setSuccess]=useState();
 
   useEffect(()=>{
-    if (!sessionStorage.getItem("token")) {
+    if (!localStorage.getItem("token")) {
       navigate("/", { replace: true });
     }
   })
-  const id = sessionStorage.getItem("id");
-  const token = sessionStorage.getItem("token");
+  const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
 

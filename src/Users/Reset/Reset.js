@@ -1,52 +1,56 @@
 import React, { useState } from "react";
 import "./Reset.css";
-import { URL } from "../../Server";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { reset } from "../../Redux/actions/userAction";
 
 export default function Reset() {
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
-  const [error, setError] = useState();
-  const [success, setSuccess] = useState();
-  const [show, setShow] = useState();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [credential, setCredential] = useState({
+    password: "",
+    confirmPassword: ""
+  });
 
+  const { error } = useSelector((state) => state.user);
+  const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { token, id } = useParams();
 
-  const {token,id} = useParams();
-  console.log(id);
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
-  const toggle = () => setShow(!show);
+  const handleChange = (e) => {
+    setCredential({
+      ...credential,
+      [e.target.name]: e.target.value
+    });
+  };
 
-  const handleReset = async (e) => {
-    const userData = {
-      password
-    }
+  const handleReset = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      
-      const res = await fetch(`${URL}/user/reset-password/${id}/${token}`, {
-        method: "PUT",
-        body: JSON.stringify(userData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      console.log(data);
-      if (!data.status) {
-        setError(data.message);
-        setSuccess("");
-      } else {
-        setSuccess(data.message);
-        setError("");
+    if (loading) return;
+
+    if (credential.password !== credential.confirmPassword) {
+      setSuccess(""); // Clear success message if passwords don't match
+      return; // Early exit if passwords do not match
+    }
+
+    setLoading(true);
+    dispatch(reset({ password: credential.password }, { id, token }))
+      .then(() => {
+        setSuccess("Password successfully changed!");
         setTimeout(() => {
           navigate("/");
-        },2000);
-      }
-    } else {
-      setError("Wrong Password");
-      setSuccess("");
-    }
+        }, 1000);
+      })
+      .catch((err) => {
+        console.error("Error resetting password:", err);
+        setSuccess(""); // Clear success message on error
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -59,42 +63,47 @@ export default function Reset() {
       </div>
       <div className="row">
         <div className="col" id="reset-form">
-          <div id="reset-form-field">
-            <div className="form-floating" id="reset-field">
-              <input
-                type={!show ? "password" : "text"}
-                className="form-control"
-                id="floatingPassword"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <label for="floatingPassword">Password</label>
+          <form onSubmit={handleReset}>
+            <div id="reset-form-field">
+              <div className="form-floating" id="reset-field">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="form-control"
+                  id="floatingPassword"
+                  name="password"
+                  placeholder="Password"
+                  value={credential.password}
+                  onChange={handleChange}
+                  required
+                />
+                <label htmlFor="floatingPassword">Password</label>
+              </div>
+              <div className="reset-show">
+                <input type="checkbox" onClick={togglePasswordVisibility} /> Show
+              </div>
+              <div className="form-floating" id="reset-field">
+                <input
+                  type="password"
+                  className="form-control"
+                  id="floatingConfirmPassword"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  value={credential.confirmPassword}
+                  onChange={handleChange}
+                  required
+                />
+                <label htmlFor="floatingConfirmPassword">Confirm Password</label>
+              </div>
             </div>
-            <div className="reset-show">
-              <input type="checkbox" onClick={toggle} /> Show
+            <div id="reset-btn">
+              <button type="submit" disabled={loading}>
+                {loading ? "Changing..." : "CHANGE"}
+              </button>
             </div>
-            <div className="form-floating" id="reset-field">
-              <input
-                type="password"
-                className="form-control"
-                id="floatingPassword"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              <label for="floatingPassword">Password</label>
-            </div>
-          </div>
+          </form>
+          {error && <div id="error">{error}</div>}
+          {success && <div id="success">{success}</div>}
         </div>
-        <div id="reset-btn">
-          <button onClick={handleReset}>CHANGE</button>
-        </div>
-        {error ? (
-          <div id="error">{error}</div>
-        ) : (
-          <div id="success">{success}</div>
-        )}
       </div>
     </div>
   );

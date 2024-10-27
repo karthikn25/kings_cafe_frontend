@@ -14,20 +14,20 @@ export default function Home() {
     if (!localStorage.getItem("token")) {
       navigate("/", { replace: true });
     }
-    handleCategory();
+   
    
   });
 
-  const handleCategory = async () => {
-    const res = await fetch(`${URL}/category/get`, {
-      method: "GET",
-      headers: {
-        "x-auth-token": token,
-      },
-    });
-    const data = await res.json();
-    setCategory(data.category);
-  };
+  // const handleCategory = async () => {
+  //   const res = await fetch(`${URL}/category/get`, {
+  //     method: "GET",
+  //     headers: {
+  //       "x-auth-token": token,
+  //     },
+  //   });
+  //   const data = await res.json();
+  //   setCategory(data.category);
+  // };
   const handleRemove = async (id) => {
     const res = await fetch(`${URL}/category/remove/${id}`, {
       method: "DELETE",
