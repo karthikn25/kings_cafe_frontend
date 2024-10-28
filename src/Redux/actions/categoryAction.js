@@ -1,4 +1,4 @@
-import { categoryDeleteFail, categoryDeleteRequest, categoryDeleteSuccess, categoryGetAllFail, categoryGetAllRequest, categoryGetAllSuccess, categoryPostFail, categoryPostRequest, categoryPostSuccess } from "../slices/categorySlice"
+import { categoryDeleteFail, categoryDeleteRequest, categoryDeleteSuccess, categoryEditFail, categoryEditRequest, categoryEditSuccess, categoryGetAllFail, categoryGetAllRequest, categoryGetAllSuccess, categoryPostFail, categoryPostRequest, categoryPostSuccess } from "../slices/categorySlice"
 
 
 const categoryPost = (credential)=>async(dispatch)=>{
@@ -67,8 +67,33 @@ const categoryGet = ()=>async(dispatch)=>{
     }
  }
 
+ const categoryEdit = (credential,categoryInfo)=>async(dispatch)=>{
+    try {
+        dispatch(categoryEditRequest());
+        const res = await fetch(`${process.env.REACT_APP_URL}/category/categoryedit/${categoryInfo}`,{
+            method:"PUT",
+            body:credential,
+            headers:{
+                "x-auth-token":localStorage.getItem("token")
+            }
+        })
+        const data = await res.json();
+        console.log(data);
+        if(res.ok){
+            dispatch(categoryEditSuccess(data))
+        }
+        else{
+            dispatch(categoryEditFail(data.message))
+        }
+    } catch (error) {
+        dispatch(categoryEditFail(error.message))
+    }
+ }
+
  export {
     categoryPost,
     categoryGet,
-    categoryRemove
+    categoryRemove,
+    categoryEdit
+
  }

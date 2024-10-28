@@ -57,6 +57,17 @@ const categorySlice = createSlice({
         categoryDeleteFail(state,action){
             state.loading = false;
             state.error = action.payload;
+        },
+        categoryEditRequest(state){
+            state.loading=true
+        },
+        categoryEditSuccess(state,action){
+            state.loading=false;
+            state.categoryInfo=action.payload
+        },
+        categoryEditFail(state,action){
+            state.loading=false;
+            state.error=action.payload
         }
         
     }
@@ -78,7 +89,10 @@ export const {
     categoryDeleteFail,
     categoryProductFail,
     categoryProductRequest,
-    categoryProductSuccess
+    categoryProductSuccess,
+    categoryEditFail,
+    categoryEditRequest,
+    categoryEditSuccess
 } = categorySlice.actions;
 
 export default categorySlice.reducer;
