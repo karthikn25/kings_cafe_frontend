@@ -67,28 +67,34 @@ const categoryGet = ()=>async(dispatch)=>{
     }
  }
 
- const categoryEdit = (credential,categoryInfo)=>async(dispatch)=>{
+const categoryEdit = (credential, categoryInfo) => async (dispatch) => {
     try {
         dispatch(categoryEditRequest());
-        const res = await fetch(`${process.env.REACT_APP_URL}/category/categoryedit/${categoryInfo}`,{
-            method:"PUT",
-            body:credential,
-            headers:{
-                "x-auth-token":localStorage.getItem("token")
-            }
-        })
+        const res = await fetch(`${process.env.REACT_APP_URL}/category/categoryedit/${categoryInfo}`, {
+            method: "PUT",
+            body: credential,
+            headers: {
+                "x-auth-token": localStorage.getItem("token"),
+            },
+        });
+
         const data = await res.json();
-        console.log(data);
-        if(res.ok){
-            dispatch(categoryEditSuccess(data))
-        }
-        else{
-            dispatch(categoryEditFail(data.message))
+        console.log(data); // Keep this for debugging
+
+        if (res.ok) {
+            dispatch(categoryEditSuccess(data));
+            return data; // Return data for further handling in the component
+        } else {
+            // Dispatch fail action with message
+            dispatch(categoryEditFail(data.message || 'Failed to update category.'));
+            return { error: data.message || 'Failed to update category.' }; // Return error for handling in the component
         }
     } catch (error) {
-        dispatch(categoryEditFail(error.message))
+        dispatch(categoryEditFail(error.message));
+        return { error: error.message }; // Return error for handling in the component
     }
- }
+};
+
 
  export {
     categoryPost,
