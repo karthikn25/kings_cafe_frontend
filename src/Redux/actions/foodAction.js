@@ -114,7 +114,7 @@ const getSingleFood = (foodInfo)=>async(dispatch)=>{
 const foodUpdate = (credential,productInfo)=>async(dispatch)=>{
     try {
         dispatch(foodUpdateRequest());
-        const res = await fetch(`${process.env.REACT_APP_URL}/food/${productInfo}`,{
+        const res = await fetch(`${process.env.REACT_APP_URL}/food/edit/${productInfo}`,{
             method:"PUT",
             body:credential,
             headers:{
