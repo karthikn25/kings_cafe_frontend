@@ -65,8 +65,8 @@ export default function EditCategory() {
       setTimeout(() => {
         navigate(`/home/${token}`);
       }, 1000);
-    } catch (err) {
-      console.error("Error updating category:", err);
+    } catch (error) {
+      console.error("Error updating category:", error);
       setSuccess(""); // Clear success message on error
     } finally {
       setLoading(false);
