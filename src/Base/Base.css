@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Kings&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+.whole-container{
+    position: relative;
+    color: #0a0a0a;  
+    padding: 10px;
+    height: 100vh;
+    max-width: 100vw;
+    width: 100%;
+    overflow: hidden;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+.topbar{
+   position: sticky;
+   top: 0px;
+   max-width: 100vw;
+   width: 100%;
+   height: 12%;
+   font-family: "Kings", cursive;
+
+}
+.content{
+    height: 90%;
+    max-width: 100vw;
+    width: 100%;
+   overflow: scroll;
+   -ms-overflow-style: none;  /* Internet Explorer 10+ */
+   scrollbar-width: none; 
+   margin: 10px 50px;
+   font-family: "Anton", sans-serif;
+   padding-bottom: 20px;
+}
+#error{
+    text-align: center;
+    color: red;
+}
+#success{
+    text-align: center;
+    color: green;
+}
+@media (max-width:900px) and (min-width:200px) {
+    .content{
+        height: 90%;
+        max-width: 100vw;
+        width: 100%;
+       overflow: scroll;
+       -ms-overflow-style: none;  /* Internet Explorer 10+ */
+       scrollbar-width: none; 
+       margin: 10px 0px;
+       font-family: "Anton", sans-serif;
+    }
+}
