@@ -110,13 +110,15 @@ import React, { useState, useEffect } from 'react';
 import Base from '../../Base/Base';
 import img from "../../Images/a.jpg";
 import { useDispatch, useSelector } from 'react-redux';
-import { foodUpdate, fetchFoodDetails } from '../../Redux/actions/foodAction';
+import { foodUpdate, getSingleFood  } from '../../Redux/actions/foodAction';
 import { useParams } from 'react-router-dom';
 
 export default function EditFood() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const { f_id } = useParams(); // Assuming f_id is actually the id of the food item
+  const { f_id } = useParams(); // Assuming f_id is the id of the food item
+
+  const foodDetails = useSelector((state) => state.foodDetails); // Make sure to have this in your Redux state
   const [credential, setCredential] = useState({
     foodName: "",
     price: "",
@@ -125,7 +127,23 @@ export default function EditFood() {
   });
 
   // Fetch food details when the component mounts
- 
+  useEffect(() => {
+    if (f_id) {
+      dispatch(getSingleFood(f_id));
+    }
+  }, [dispatch, f_id]);
+
+  // Update the form state when foodDetails is available
+  useEffect(() => {
+    if (foodDetails) {
+      setCredential({
+        foodName: foodDetails.foodName || "",
+        price: foodDetails.price || "",
+        details: foodDetails.details || "",
+        photo: ""
+      });
+    }
+  }, [foodDetails]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -142,7 +160,7 @@ export default function EditFood() {
     }
   };
 
-  const handleCreate = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     const data = new FormData();
     data.append("foodName", credential.foodName);
@@ -151,10 +169,17 @@ export default function EditFood() {
     if (credential.photo) {
       data.append("photo", credential.photo);
     }
-    
+
     setLoading(true);
-    await dispatch(foodUpdate(data, f_id));
-    setLoading(false);
+
+    try {
+      await dispatch(foodUpdate(data, f_id));
+      setLoading(false);
+    } catch (error) {
+      console.error("Error updating food:", error);
+      setLoading(false);
+      // Optionally, set an error state to show the user an error message
+    }
   };
 
   return (
@@ -165,13 +190,13 @@ export default function EditFood() {
           <div id="add-box-container">
             <div id="add-box">
               <div id="add-img">
-                <img src={img} alt="" />
+                <img src={img} alt="Food" />
                 <input type="file" onChange={handleChange} name="photo" />
               </div>
               <div id="add-field">
                 <input
                   type="text"
-                  placeholder="name"
+                  placeholder="Name"
                   name="foodName"
                   onChange={handleChange}
                   value={credential.foodName}
@@ -195,7 +220,7 @@ export default function EditFood() {
                 />
               </div>
               <div id="add-btn">
-                <button onClick={handleCreate} disabled={loading}>
+                <button onClick={handleUpdate} disabled={loading}>
                   {loading ? 'Updating...' : 'UPDATE'}
                 </button>
               </div>
