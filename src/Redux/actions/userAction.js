@@ -200,34 +200,61 @@ import {
       dispatch(getUserFail(error.message));
     }
   };
-  const editUser = (credentials, userInfo) => async (dispatch) => {
+  // const editUser = (credentials, userInfo) => async (dispatch) => {
+  //   try {
+  //     dispatch(editUserRequest());
+  //     const formData = new FormData();
+  //     formData.append("username", credentials.username);
+  //     formData.append("email", credentials.email);
+  //     formData.append("phoneNumber", credentials.phoneNumber);
+      
+  //     if (credentials.avatar) {
+  //       formData.append("avatar", credentials.avatar); // Add the image file to FormData
+  //     }
+  //     const res = await fetch(`${process.env.REACT_APP_URL}/user/edit/${userInfo}`, {
+  //       method: "PUT",
+  //       body: formData,
+        
+  //     });
+  //     const data = await res.json();
+  //     console.log(data);
+  //     if (res.ok) {
+  //       dispatch(editUserSuccess(data));
+  //     } else {
+  //       dispatch(editUserFail(data.message));
+  //     }
+  //   } catch (error) {
+  //     dispatch(editUserFail(error.message));
+  //   }
+  // };
+ const editUser = (credentials, userInfo) => async (dispatch) => {
     try {
       dispatch(editUserRequest());
-      const { id } = userInfo;
       const formData = new FormData();
-      formData.append("username", credentials.username);
-      formData.append("email", credentials.email);
-      formData.append("phoneNumber", credentials.phoneNumber);
-      
+      formData.append("username", credentials.username);  // Use "name" instead of "username"
       if (credentials.avatar) {
         formData.append("avatar", credentials.avatar); // Add the image file to FormData
       }
-      const res = await fetch(`${process.env.REACT_APP_URL}/user/edit/${id}`, {
+  
+      const res = await fetch(`${process.env.REACT_APP_URL}/user/edit/${userInfo}`, {
         method: "PUT",
         body: formData,
-        
       });
       const data = await res.json();
       console.log(data);
       if (res.ok) {
         dispatch(editUserSuccess(data));
+        return data;  // Return the response data (e.g., user data or success message)
       } else {
         dispatch(editUserFail(data.message));
+        return { success: false, message: data.message };
       }
     } catch (error) {
       dispatch(editUserFail(error.message));
+      return { success: false, message: error.message };
     }
   };
+  
   
   export {
     login,
