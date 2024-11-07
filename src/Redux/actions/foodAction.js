@@ -4,15 +4,12 @@ import { categoryFoodFail, categoryFoodRequest, categoryFoodSuccess, foodDeleteF
 
 
 
-const foodPost = (credential,categoryInfo,userInfo)=>async(dispatch)=>{
+const foodPost = ({credential,categoryInfo,userInfo})=>async(dispatch)=>{
     try {
         dispatch(foodPostRequest())
-        const res = await fetch(`${process.env.REACT_APP_URL}/food/${categoryInfo}/${userInfo}`,{
+        const res = await fetch(`${process.env.REACT_APP_URL}/food/create/${categoryInfo}/${userInfo}`,{
             method:"POST",
-            body:credential,
-            headers:{
-                "Content-Type":"application/json"
-            }
+            body:credential
         })
         const data = await res.json();
         console.log(data);
@@ -117,9 +114,7 @@ const foodUpdate = (credential,productInfo)=>async(dispatch)=>{
         const res = await fetch(`${process.env.REACT_APP_URL}/food/edit/${productInfo}`,{
             method:"PUT",
             body:credential,
-            headers:{
-                "Content-Type":"application/json"
-            }
+            
         })
         const data = await res.json();
         console.log(data);

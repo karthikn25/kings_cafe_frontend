@@ -1,75 +1,94 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Add.css";
 import Base from "../../Base/Base";
 import img from "../../Images/a.jpg";
 import { useNavigate, useParams } from "react-router-dom";
-import { URL } from "../../Server";
+import { useDispatch, useSelector } from "react-redux";
+import { foodPost } from "../../Redux/actions/foodAction";
 
 export default function Add() {
-  const [foodDetails, setFoodDetails] = useState({
+  const [credential, setCredential] = useState({
     foodName: "",
     price: "",
     photo: null,
     details: "",
   });
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+
+  const { id } = useParams();
+  const token = localStorage.getItem("token");
+
+  const { foodDetails, error: reduxError } = useSelector((state) => state.food);
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/", { replace: true });
     }
-  
-  });
+  }, [navigate]);
 
-  const token = localStorage.getItem("token");
-  const [success, setSuccess] = useState();
-  const [error, setError] = useState();
-  const { id } = useParams();
-
+  // Handle input changes (text, number, file)
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "photo") {
-      setFoodDetails({
-        ...foodDetails,
+      setCredential({
+        ...credential,
         photo: files[0],
       });
     } else {
-      setFoodDetails({
-        ...foodDetails,
+      setCredential({
+        ...credential,
         [name]: value,
       });
     }
   };
 
+  // Handle form submission
   const handleCreate = async (e) => {
     e.preventDefault();
 
     const data = new FormData();
-    data.append("foodName", foodDetails.foodName);
-    data.append("price", foodDetails.price);
-    data.append("details", foodDetails.details);
-    if (foodDetails.photo) {
-      data.append("photo", foodDetails.photo);
+    data.append("foodName", credential.foodName);
+    data.append("price", credential.price);
+    data.append("details", credential.details);
+    if (credential.photo) {
+      data.append("photo", credential.photo);
     }
 
-    const res = await fetch(`${URL}/food/create/${id}`, {
-      method: "POST",
-      body: data,
-      headers: {
-        "x-auth-token": token,
-      },
-    });
-    const data1 = await res.json();
-    console.log(data1);
-    if (!data1.food) {
-      setError(data1.message);
-      setSuccess("");
-    } else {
-      setError("");
-      setSuccess(data1.message);
+    setLoading(true);
+    setError(""); // Clear previous errors
+    setSuccess(""); // Clear success message before new submission
+
+    try {
+      // Dispatching the action to post food details
+      await dispatch(
+        foodPost({
+          credential: data,
+          categoryInfo: id,
+          userInfo: localStorage.getItem("id"),
+        })
+      );
+
+      // Assuming foodPost dispatches success action
+      setSuccess("Food added successfully!");
+      setLoading(false);
+      setCredential({
+        foodName: "",
+        price: "",
+        photo: null,
+        details: "",
+      });
+      
+      // Redirect after a short delay to allow success message display
       setTimeout(() => {
         navigate(`/home/${token}`);
-      }, 2000);
+      }, 1500); // Delay before redirecting to give the user a chance to see the success message
+    } catch (error) {
+      setLoading(false);
+      setError(reduxError || "An error occurred while adding the food.");
     }
   };
 
@@ -81,16 +100,16 @@ export default function Add() {
           <div id="add-box-container">
             <div id="add-box">
               <div id="add-img">
-                <img src={img} alt="" />
+                <img src={img} alt="Food" />
                 <input type="file" onChange={handleChange} name="photo" />
               </div>
               <div id="add-field">
                 <input
                   type="text"
-                  placeholder="name"
+                  placeholder="Name"
                   name="foodName"
                   onChange={handleChange}
-                  value={foodDetails.foodName}
+                  value={credential.foodName}
                 />
               </div>
               <div id="add-field">
@@ -99,7 +118,7 @@ export default function Add() {
                   placeholder="Price"
                   name="price"
                   onChange={handleChange}
-                  value={foodDetails.price}
+                  value={credential.price}
                 />
               </div>
               <div id="add-field">
@@ -108,17 +127,18 @@ export default function Add() {
                   placeholder="Details of Recipe"
                   name="details"
                   onChange={handleChange}
-                  value={foodDetails.details}
+                  value={credential.details}
                 />
               </div>
               <div id="add-btn">
-                <button onClick={handleCreate}>ADD</button>
+                <button onClick={handleCreate} disabled={loading}>
+                  {loading ? "Adding..." : "ADD"}
+                </button>
               </div>
-              {error ? (
-                <div id="error">{error}</div>
-              ) : (
-                <div id="success">{success}</div>
-              )}
+
+              {/* Conditionally render success or error message */}
+              {success && <div id="success">{success}</div>}
+              {error && <div id="error">{error}</div>}
             </div>
           </div>
         </div>
