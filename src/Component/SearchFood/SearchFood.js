@@ -13,7 +13,7 @@ export default function SearchFood() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!sessionStorage.getItem("token")) {
+    if (!localStorage.getItem("token")) {
       navigate("/", { replace: true });
     }
     handleGetFood();
