@@ -4,40 +4,34 @@ import img from "../../Images/cafe logo.png";
 import img1 from "../../Images/PROFILE.jpg";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../Server";
+import { useDispatch, useSelector } from "react-redux";
+import { getSingleUser } from "../../Redux/actions/userAction";
 
 export default function Topbar() {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState([]);
-  const [keyword,setKeyword]=useState();
+  const [keyword, setKeyword] = useState();
 
+  const { userInfo, error } = useSelector((state) => state.user); // Access userInfo from Redux state
+  const dispatch = useDispatch();
 
   const id = localStorage.getItem("id");
   const token = localStorage.getItem("token");
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
 
-  const handleLogout = ()=>{
-   localStorage.clear()
-   navigate("/")
-  }
+  useEffect(() => {
+    if (id) {
+      dispatch(getSingleUser(id)); // Fetch user data from the API when the component mounts
+    }
+  }, [dispatch, id]);
 
-  // useEffect(() => {
-  //   getUser();
-  // });
+  const handleSearch = async () => {
+    navigate(`/search/${keyword}`);
+  };
 
-  // const getUser = async () => {
-  //   const res = await fetch(`${URL}/user/get/${id}`, {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   const data = await res.json();
-  //   setUserData(data.user);
-  // };
-
-  const handleSearch = async()=>{
-   navigate(`/search/${keyword}`)   
-  }
   return (
     <div id="topbar">
       <div id="topbar-box">
@@ -47,23 +41,28 @@ export default function Topbar() {
               <img src={img} alt="logo" />
             </div>
             <div id="topbar-search">
-              <input type="text" placeholder="Search" value={keyword} onChange={(e)=>setKeyword(e.target.value)}/>
-              <i class="bx bx-search-alt-2" onClick={handleSearch}></i>
+              <input
+                type="text"
+                placeholder="Search"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+              />
+              <i className="bx bx-search-alt-2" onClick={handleSearch}></i>
             </div>
           </div>
           <div className="col-6" id="topbar-end">
             <div id="topbar-nav" onClick={() => navigate(`/home/${token}`)}>
               <p> HOME</p>
-              <i class="bx bx-home"></i>
+              <i className="bx bx-home"></i>
             </div>
-            
+
             <div id="topbar-logout">
               <button onClick={handleLogout}>LOGOUT</button>
             </div>
-            <p></p>
             <div id="topbar-profile">
+              {/* Display user's avatar if available, otherwise fallback to the default avatar */}
               <img
-                src={userData ? userData.avatar : img1}
+                src={userInfo?.user?.avatar || img1} // Use userInfo from Redux store
                 alt="profile"
                 onClick={() => navigate("/profile_edit")}
               />

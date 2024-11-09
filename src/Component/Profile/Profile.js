@@ -9,7 +9,7 @@ import { editUser, getSingleUser } from "../../Redux/actions/userAction";
 export default function Profile() {
   const [credential, setCredential] = useState({
     username: "",
-    avatar: null,  // This will store the avatar file
+    avatar: null, // This will store the avatar file
   });
 
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ export default function Profile() {
       navigate("/", { replace: true });
     }
     if (userId) {
-      dispatch(getSingleUser(userId)); // Fetch user info
+      dispatch(getSingleUser(userId)); // Fetch user info when component mounts
     }
   }, [dispatch, userId, token, navigate]);
 
@@ -39,7 +39,7 @@ export default function Profile() {
         avatar: userInfo.avatar || null, // Set the avatar from the userInfo
       });
     }
-  }, [userInfo]);
+  }, [userInfo]); // Update local state whenever userInfo from Redux changes
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -71,19 +71,17 @@ export default function Profile() {
     try {
       // Dispatch the update action and get the response
       const result = await dispatch(editUser(data, userId));
-
       console.log("Edit User Result:", result); // Log the result to inspect the response
 
-      // Check if the result contains an expected response structure
       if (result && result.user) {
-        dispatch(getSingleUser(userId)); // Re-fetch the updated user info
+        // Re-fetch the updated user info and update local state
+        dispatch(getSingleUser(userId)); // Ensure this updates the Redux state with the new user info
         setLoading(false);
         setSuccess("Profile updated successfully.");
         setTimeout(() => {
           navigate(`/home/${token}`);
         }, 1000);
       } else {
-        // Handle the case where the response doesn't match expectations
         setLoading(false);
         setSuccess("Failed to update profile.");
       }
@@ -94,9 +92,13 @@ export default function Profile() {
     }
   };
 
-  const avatarPreview = credential.avatar
-    ? URL.createObjectURL(credential.avatar) // Preview the selected avatar
-    : credential.avatar || userInfo?.user.avatar + "?t=" + new Date().getTime() || img; // Fallback to userInfo avatar with cache busting
+  // Use cache busting with new timestamp when user avatar is updated
+  const avatarPreview =
+    credential.avatar
+      ? URL.createObjectURL(credential.avatar) // Preview the selected avatar
+      : credential.avatar ||
+        userInfo?.user.avatar + "?t=" + new Date().getTime() ||
+        img; // Fallback to userInfo avatar with cache busting
 
   return (
     <div id="profile">

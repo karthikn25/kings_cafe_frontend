@@ -220,26 +220,26 @@ import {
   };
 
   
-  const editUser = (credentials, userInfo) => async (dispatch) => {
+const editUser = (credentials, userId) => async (dispatch) => {
     try {
       dispatch(editUserRequest());
       const formData = new FormData();
-      formData.append("username", credentials.username);  // Use "name" instead of "username"
-      if (credentials.avatar) {
-        formData.append("avatar", credentials.avatar); // Add the image file to FormData
-      }
+     
   
-      const res = await fetch(`${process.env.REACT_APP_URL}/user/edit/${userInfo}`, {
+      // Make the API call to update the user
+      const res = await fetch(`${process.env.REACT_APP_URL}/user/edit/${userId}`, {
         method: "PUT",
-        body: formData,
+        body: credentials,
       });
+  
       const data = await res.json();
-      console.log(data);
+      console.log(data); // For debugging
+  
       if (res.ok) {
-        dispatch(editUserSuccess(data));
+        dispatch(editUserSuccess(data));  // Dispatch success action with updated user data
         return data;  // Return the response data (e.g., user data or success message)
       } else {
-        dispatch(editUserFail(data.message));
+        dispatch(editUserFail(data.message));  // Dispatch failure action with error message
         return { success: false, message: data.message };
       }
     } catch (error) {
