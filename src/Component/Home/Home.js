@@ -71,10 +71,10 @@ export default function Home() {
                         </div>
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-around" }}>
-                        <p style={{ color: "blue" }} onClick={() => navigate(`/edit/${d._id}/${token}`)}>
+                        <p style={{ color: "blue" }} className="home-logo" onClick={() => navigate(`/edit/${d._id}/${token}`)}>
                           <i className='bx bx-edit-alt'></i> Edit
                         </p>
-                        <p style={{ color: "red" }} onClick={() => handleRemove(d._id)}>
+                        <p style={{ color: "red" }} className="home-logo" onClick={() => handleRemove(d._id)}>
                           <i className='bx bx-trash'></i> Remove
                         </p>
                       </div>

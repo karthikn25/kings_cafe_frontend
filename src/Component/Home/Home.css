@@ -115,7 +115,7 @@
      }
     #item-box{
         background: #D9D9D9;
-        height: 220px;
+        height: 280px;
         width: 190px;
         border-radius: 15px;
         text-align: center;
@@ -146,9 +146,12 @@
         gap: 25px 30px;
         margin-left: 100px;
      }
+     .home-logo{
+        font-size: 16px;
+     }
     #item-box{
         background: #D9D9D9;
-        height: 220px;
+        height: 280px;
         width: 190px;
         border-radius: 15px;
         text-align: center;
@@ -180,7 +183,7 @@
      }
     #item-box{
         background: #D9D9D9;
-        height: 220px;
+        height: 260px;
         width: 190px;
         border-radius: 15px;
         text-align: center;
@@ -202,6 +205,9 @@
         }
        
      }
+     .home-logo{
+        font-size: 14px;
+     }
  }
  @media (max-width:470px) and (min-width:430px) {
     #item-container{
@@ -212,12 +218,15 @@
      }
     #item-box{
         background: #D9D9D9;
-        height: 220px;
+        height: 240px;
         width: 190px;
         border-radius: 15px;
         text-align: center;
         padding-top: 16px;
         cursor: pointer;
+     }
+     .home-logo{
+        font-size: 14px;
      }
      .f-img{
         >img{
@@ -245,7 +254,7 @@
      }
     #item-box{
         background: #D9D9D9;
-        height: 160px;
+        height: 220px;
         width: 140px;
         border-radius: 15px;
         text-align: center;
@@ -258,6 +267,9 @@
             width: 100px;
             border-radius: 50%;
         }
+     }
+     .home-logo{
+        font-size: 14px;
      }
      #f-detail{
         text-align: center;
@@ -278,12 +290,15 @@
      }
     #item-box{
         background: #D9D9D9;
-        height: 160px;
+        height: 200px;
         width: 140px;
         border-radius: 15px;
         text-align: center;
         padding-top: 12px;
         cursor: pointer;
+     }
+     .home-logo{
+        font-size: 12px;
      }
      .f-img{
         >img{
@@ -311,7 +326,7 @@
      }
     #item-box{
         background: #D9D9D9;
-        height: 180px;
+        height: 200px;
         width: 180px;
         border-radius: 15px;
         text-align: center;
@@ -324,6 +339,9 @@
             width: 130px;
             border-radius: 50%;
         }
+     }
+     .home-logo{
+        font-size: 14px;
      }
      #f-detail{
         text-align: center;
@@ -344,7 +362,7 @@
      }
     #item-box{
         background: #D9D9D9;
-        height: 180px;
+        height: 200px;
         width: 180px;
         border-radius: 15px;
         text-align: center;
@@ -357,6 +375,9 @@
             width: 130px;
             border-radius: 50%;
         }
+     }
+     .home-logo{
+        font-size: 10px;
      }
      #f-detail{
         text-align: center;
