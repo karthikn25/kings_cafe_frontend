@@ -24,8 +24,8 @@ export default function FoodList() {
     }
 
     const intervalId = setInterval(() => {
-      dispatch(getCategoryFood(c_id)); // Refresh every 30 seconds
-    }, 30000); // 30000 milliseconds = 30 seconds
+      dispatch(getCategoryFood(c_id)); 
+    }, 10000); 
 
     // Cleanup interval on component unmount to avoid memory leaks
     return () => clearInterval(intervalId);
