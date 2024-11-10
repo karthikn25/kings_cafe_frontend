@@ -6,7 +6,7 @@ import { URL } from "../../Server";
 import { MdOutlineFastfood, MdOutlineNoFood } from "react-icons/md";
 import img from "../../Images/add image.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategoryFood, toggleFoodStatus, deleteFood } from "../../Redux/actions/foodAction"; // Import deleteFood action
+import { getCategoryFood, toggleFoodStatus, deleteFood } from "../../Redux/actions/foodAction";
 import Loading from "../../Base/Loader/Loading";
 
 export default function FoodList() {
@@ -20,9 +20,16 @@ export default function FoodList() {
     if (!token) {
       navigate("/", { replace: true });
     } else {
-      dispatch(getCategoryFood(c_id));
+      dispatch(getCategoryFood(c_id)); // Initial fetch
     }
-  }, [dispatch, navigate, token]);
+
+    const intervalId = setInterval(() => {
+      dispatch(getCategoryFood(c_id)); // Refresh every 30 seconds
+    }, 30000); // 30000 milliseconds = 30 seconds
+
+    // Cleanup interval on component unmount to avoid memory leaks
+    return () => clearInterval(intervalId);
+  }, [dispatch, navigate, token, c_id]);
 
   const handleToggleStatus = (foodId) => {
     dispatch(toggleFoodStatus(foodId))
@@ -33,8 +40,7 @@ export default function FoodList() {
     if (window.confirm("Are you sure you want to remove this food?")) {
         dispatch(deleteFood(foodId))
             .then(() => {
-                // Refresh the food list after deletion
-                dispatch(getCategoryFood(c_id));
+                dispatch(getCategoryFood(c_id)); // Refresh food list after deletion
             })
             .catch((error) => {
                 console.error("Error deleting food:", error);
@@ -42,7 +48,6 @@ export default function FoodList() {
             });
     }
 };
-
 
   return (
     <div id="home">
@@ -77,15 +82,14 @@ export default function FoodList() {
                               onClick={() => handleToggleStatus(d._id)}
                             />
                           )}
-                          <i class='bx bx-edit-alt'
-                          onClick={()=>navigate(`/editFood/${d._id}/${token}`)}
-                          style={{ color: "blue" }}
-
+                          <i className='bx bx-edit-alt'
+                            onClick={() => navigate(`/editFood/${d._id}/${token}`)}
+                            style={{ color: "blue" }}
                           ></i>
                           <i
                             className="bx bx-trash"
                             style={{ color: "red" }}
-                            onClick={() => handleRemove(d._id)} // Updated to use the new handleRemove function
+                            onClick={() => handleRemove(d._id)}
                           ></i>
                         </div>
                       </div>
