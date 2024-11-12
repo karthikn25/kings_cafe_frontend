@@ -23,12 +23,6 @@ export default function FoodList() {
       dispatch(getCategoryFood(c_id)); // Initial fetch
     }
 
-    const intervalId = setInterval(() => {
-      dispatch(getCategoryFood(c_id)); 
-    }, 10000); 
-
-    // Cleanup interval on component unmount to avoid memory leaks
-    return () => clearInterval(intervalId);
   }, [dispatch, navigate, token, c_id]);
 
   const handleToggleStatus = (foodId) => {
